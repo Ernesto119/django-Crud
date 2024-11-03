@@ -1,0 +1,33 @@
+{% extends "./layerd/base.html" %} {% block content %} {% if form %}
+<div class="container">
+  <form class="row justify-content-center align-items-center" action="/create/" method="post" id="formtask">
+    <div class="col-auto pt-4">{% csrf_token %} {{form.as_p}}</div>
+    <div class="col-auto pt-2">
+      <input class="btn btn-primary" type="submit" id="btnsave" />
+    </div>
+  </form>
+</div>
+{% endif %}
+
+<div id="tasklist" class="container">
+  {% for task in tasks %}
+  <div class="d-flex mb-3 border" id="task-{{ task.id }}">
+    <h3 class="me-auto p-2">{{ task.title }}</h3>
+    <!-- <h3>{{ task.date }}</h3>
+    <h4>{{ task.status }}</h4> -->
+    <div class="btn-group align-items-center" role="group">
+      <button class="delete-btn p-2 btn btn-danger" data-id="{{ task.id }}">
+        Delete
+      </button>
+      <a href="{% url 'update' task.id %}" class="p-2 btn btn-primary"
+        >Update</a
+      >
+      <button class="complete-btn p-2 btn btn-success" data-id="{{ task.id }}">
+        Complete
+      </button>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
